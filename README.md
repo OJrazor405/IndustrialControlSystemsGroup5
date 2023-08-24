@@ -1,9 +1,9 @@
 # Project for Industrial Control Systems
 
-##Participants:
+Participants:
 
-###Ole Jørgen Hagen
+Ole Jørgen Hagen
 
-###Sander Langeland Øverbø
+Sander Langeland Øverbø
 
-###Håkon Søderlund Nilsen
+Håkon Søderlund Nilsen
