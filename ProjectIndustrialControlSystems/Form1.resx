@@ -124,7 +124,7 @@
   <data name="tsmHome.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DgAACw4BQL7hQQAAAqpJREFUSEvtk0tME1EUhuvCjYkr3blx58oVO2LS0JlOifRBtYohCLFjorVgiDUE
+        DAAACwwBP0AiyAAAAqpJREFUSEvtk0tME1EUhuvCjYkr3blx58oVO2LS0JlOifRBtYohCLFjorVgiDUE
         CAYJNOEV8JHIxkRdCBtXJsZEMSamFGYcKW3lUcsjsfgkVihTMSFyvOf2ijzGglCDJPzJn0zOnPN/d+69
         o9tW8hsMB+Tc3MeyyfSsV68/yMr/TkpW1u4+o7GqTxDUCZdrHk2ek1jDd6wts+rl+SOyIIyHHA71a309
         zLW3U894vRAuKEhKghDr4XmOtW9eil6/XzKZusjWJj9WVFDYbGMjDJ5xUs82NdEavpNID1lAp8Rx+9j4
@@ -141,7 +141,7 @@
   <data name="tsmAlarms.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DQAACw0B7QfALAAAAzhJREFUSEvVV9tLFFEY3+hOL/0BvdRD0ENPRkg9rLMzszMrXlZkH3wIFVREZBUh
+        DAAACwwBP0AiyAAAAzhJREFUSEvVV9tLFFEY3+hOL/0BvdRD0ENPRkg9rLMzszMrXlZkH3wIFVREZBUh
         vKCo4DVvLz0FPQQ9VPQSSNBTVLg7s+sNqQdvhZakFZu7zuxkXqbvmz7NdUZbHTfoBz8Yzjnf95tzvsuc
         cfyXCLndr0Oi+Epm2cs09G8gC8LcZFHRpux2a/A88NLpPENTqQWIjX9paNBjnZ36u4ICNSQIUyGWvUTT
         qYPs8bxZrK3VtYEBg/N+/4bE8zGZ467RktQAdjjxtbFxWxi5BCcAR78SyMi4ScuOFrrDcUzm+Wi0oyNB
@@ -161,7 +161,7 @@
   <data name="tsmSettings.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DQAACw0B7QfALAAABAFJREFUSEvVV0tPU0EUJjHGpbp1o7/Elb/AxIU7jY8VxgWUPiC6UEEp7W3RiG1Q
+        DAAACwwBP0AiyAAABAFJREFUSEvVV0tPU0EUJjHGpbp1o7/Elb/AxIU7jY8VxgWUPiC6UEEp7W3RiG1Q
         2t5bHkVAjfIUeYhEDRRBAXlJIm9QRNpiRMx4vuncy23pxQeg8UtOcjNzzvf1zJyZOU37b5BnLjlkN/mZ
         3jAmpncO9izfSaWwITLav8xgsrshkp8ZOCGmdw6u7NJQU3UvF4U1Vr1ibhoT09uPPEtwf36m/4zTLEd6
         Oqc14Z7OKYaxApPvtHS+ZJ9w3zrc59x7CsxyLpHHgoWN0fbaQU1UtbZHg0ymOadViTosgSuIEeG/BnuG

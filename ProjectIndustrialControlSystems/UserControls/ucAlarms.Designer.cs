@@ -28,97 +28,55 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucAlarms));
-            this.txtAlarmWindow = new System.Windows.Forms.RichTextBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnAcknowledge = new System.Windows.Forms.Button();
-            this.btnAddAlarm = new System.Windows.Forms.Button();
-            this.txtAlarmText = new System.Windows.Forms.TextBox();
-            this.lblAlarm = new System.Windows.Forms.Label();
-            this.lblAlarmColor = new System.Windows.Forms.Label();
-            this.cboAlarmColor = new System.Windows.Forms.ComboBox();
-            this.groupBox1.SuspendLayout();
+            this.btnAcknowledgeAlarm = new System.Windows.Forms.Button();
+            this.btnDeleteAlarm = new System.Windows.Forms.Button();
+            this.lvAlarm = new System.Windows.Forms.ListView();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // txtAlarmWindow
+            // btnAcknowledgeAlarm
             // 
-            this.txtAlarmWindow.Dock = System.Windows.Forms.DockStyle.Top;
-            this.txtAlarmWindow.Location = new System.Drawing.Point(0, 0);
-            this.txtAlarmWindow.Name = "txtAlarmWindow";
-            this.txtAlarmWindow.ReadOnly = true;
-            this.txtAlarmWindow.Size = new System.Drawing.Size(3177, 707);
-            this.txtAlarmWindow.TabIndex = 0;
-            this.txtAlarmWindow.Text = "";
+            this.btnAcknowledgeAlarm.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.btnAcknowledgeAlarm.Location = new System.Drawing.Point(3, 529);
+            this.btnAcknowledgeAlarm.Name = "btnAcknowledgeAlarm";
+            this.btnAcknowledgeAlarm.Size = new System.Drawing.Size(174, 58);
+            this.btnAcknowledgeAlarm.TabIndex = 1;
+            this.btnAcknowledgeAlarm.Text = "Acknowledge";
+            this.btnAcknowledgeAlarm.UseVisualStyleBackColor = false;
+            this.btnAcknowledgeAlarm.Click += new System.EventHandler(this.btnAcknowledgeAlarm_Click);
             // 
-            // groupBox1
+            // btnDeleteAlarm
             // 
-            this.groupBox1.Controls.Add(this.cboAlarmColor);
-            this.groupBox1.Controls.Add(this.lblAlarmColor);
-            this.groupBox1.Controls.Add(this.lblAlarm);
-            this.groupBox1.Controls.Add(this.txtAlarmText);
-            this.groupBox1.Controls.Add(this.btnAddAlarm);
-            this.groupBox1.Controls.Add(this.btnAcknowledge);
-            this.groupBox1.Location = new System.Drawing.Point(3, 713);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(765, 206);
-            this.groupBox1.TabIndex = 7;
-            this.groupBox1.TabStop = false;
+            this.btnDeleteAlarm.BackColor = System.Drawing.Color.Yellow;
+            this.btnDeleteAlarm.Location = new System.Drawing.Point(183, 529);
+            this.btnDeleteAlarm.Name = "btnDeleteAlarm";
+            this.btnDeleteAlarm.Size = new System.Drawing.Size(174, 58);
+            this.btnDeleteAlarm.TabIndex = 2;
+            this.btnDeleteAlarm.Text = "Delete";
+            this.btnDeleteAlarm.UseVisualStyleBackColor = false;
+            this.btnDeleteAlarm.Click += new System.EventHandler(this.btnDeleteAlarm_Click);
             // 
-            // btnAcknowledge
+            // lvAlarm
             // 
-            this.btnAcknowledge.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnAcknowledge.Image = ((System.Drawing.Image)(resources.GetObject("btnAcknowledge.Image")));
-            this.btnAcknowledge.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnAcknowledge.Location = new System.Drawing.Point(570, 42);
-            this.btnAcknowledge.Name = "btnAcknowledge";
-            this.btnAcknowledge.Size = new System.Drawing.Size(156, 45);
-            this.btnAcknowledge.TabIndex = 1;
-            this.btnAcknowledge.Text = "Acknowledge";
-            this.btnAcknowledge.UseVisualStyleBackColor = true;
+            this.lvAlarm.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lvAlarm.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lvAlarm.HideSelection = false;
+            this.lvAlarm.Location = new System.Drawing.Point(0, 0);
+            this.lvAlarm.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.lvAlarm.Name = "lvAlarm";
+            this.lvAlarm.Size = new System.Drawing.Size(3177, 519);
+            this.lvAlarm.TabIndex = 3;
+            this.lvAlarm.UseCompatibleStateImageBehavior = false;
             // 
-            // btnAddAlarm
+            // button1
             // 
-            this.btnAddAlarm.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnAddAlarm.Location = new System.Drawing.Point(376, 42);
-            this.btnAddAlarm.Name = "btnAddAlarm";
-            this.btnAddAlarm.Size = new System.Drawing.Size(156, 45);
-            this.btnAddAlarm.TabIndex = 2;
-            this.btnAddAlarm.Text = "Add";
-            this.btnAddAlarm.UseVisualStyleBackColor = true;
-            this.btnAddAlarm.Click += new System.EventHandler(this.btnAddAlarm_Click);
-            // 
-            // txtAlarmText
-            // 
-            this.txtAlarmText.Location = new System.Drawing.Point(29, 51);
-            this.txtAlarmText.Name = "txtAlarmText";
-            this.txtAlarmText.Size = new System.Drawing.Size(308, 26);
-            this.txtAlarmText.TabIndex = 3;
-            // 
-            // lblAlarm
-            // 
-            this.lblAlarm.AutoSize = true;
-            this.lblAlarm.Location = new System.Drawing.Point(25, 22);
-            this.lblAlarm.Name = "lblAlarm";
-            this.lblAlarm.Size = new System.Drawing.Size(84, 20);
-            this.lblAlarm.TabIndex = 4;
-            this.lblAlarm.Text = "Alarm text:";
-            // 
-            // lblAlarmColor
-            // 
-            this.lblAlarmColor.AutoSize = true;
-            this.lblAlarmColor.Location = new System.Drawing.Point(25, 88);
-            this.lblAlarmColor.Name = "lblAlarmColor";
-            this.lblAlarmColor.Size = new System.Drawing.Size(92, 20);
-            this.lblAlarmColor.TabIndex = 5;
-            this.lblAlarmColor.Text = "Alarm color:";
-            // 
-            // cboAlarmColor
-            // 
-            this.cboAlarmColor.FormattingEnabled = true;
-            this.cboAlarmColor.Location = new System.Drawing.Point(29, 111);
-            this.cboAlarmColor.Name = "cboAlarmColor";
-            this.cboAlarmColor.Size = new System.Drawing.Size(308, 28);
-            this.cboAlarmColor.TabIndex = 6;
+            this.button1.Location = new System.Drawing.Point(734, 658);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(210, 129);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // ucAlarms
             // 
@@ -126,25 +84,20 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.CausesValidation = false;
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.txtAlarmWindow);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.lvAlarm);
+            this.Controls.Add(this.btnDeleteAlarm);
+            this.Controls.Add(this.btnAcknowledgeAlarm);
             this.Name = "ucAlarms";
             this.Size = new System.Drawing.Size(3177, 2043);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.RichTextBox txtAlarmWindow;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ComboBox cboAlarmColor;
-        private System.Windows.Forms.Label lblAlarmColor;
-        private System.Windows.Forms.Label lblAlarm;
-        private System.Windows.Forms.TextBox txtAlarmText;
-        private System.Windows.Forms.Button btnAddAlarm;
-        private System.Windows.Forms.Button btnAcknowledge;
+        private System.Windows.Forms.Button btnAcknowledgeAlarm;
+        private System.Windows.Forms.Button btnDeleteAlarm;
+        private System.Windows.Forms.ListView lvAlarm;
+        private System.Windows.Forms.Button button1;
     }
 }

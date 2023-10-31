@@ -17,6 +17,7 @@ namespace ProjectIndustrialControlSystems
         ucHome homePage = new ucHome();
         ucAlarms alarmPage = new ucAlarms();
         ucSettings settingsPage = new ucSettings();
+
         public Form1()
         {
             InitializeComponent();
