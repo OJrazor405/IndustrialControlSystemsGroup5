@@ -54,8 +54,6 @@ namespace ProjectIndustrialControlSystems.UserControls
         private void btnEmptyLog_Click(object sender, EventArgs e)
         {
             txtPoolLog.Text = string.Empty;
-            alarm = new AlarmEntity("Dette er en alarm", true, DateTime.Now, true, Color.Blue);
-            logClient.AddAlarmEntity("alarms", alarm);
         }
     }
 }

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,19 +18,16 @@ namespace ProjectIndustrialControlSystems.UserControls
     public partial class ucAlarms : UserControl
     {
         LogClient logClient;
+        List<AlarmEntity> alarmList;
         AlarmEntity alarmEntity;
 
         public ucAlarms()
         {
             InitializeComponent();
             InitializeListView();
-            logClient = new LogClient();
-            IEnumerable<AlarmEntity> alarms = await logClient.GetAllAlarmsAsync();
-            List<AlarmEntity> alarmList = alarms.ToList();
-
         }
 
-        private void InitializeListView()
+        private async void InitializeListView()
         {
             lvAlarm.View = View.Details;
             lvAlarm.CheckBoxes = true;
@@ -46,6 +44,32 @@ namespace ProjectIndustrialControlSystems.UserControls
             lvAlarm.DrawItem += LvAlarm_DrawItem;
             lvAlarm.DrawSubItem += LvAlarm_DrawSubItem;
             lvAlarm.DrawColumnHeader += LvAlarm_DrawColumnHeader;
+
+            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+            timer.Tick()
+
+
+        }
+
+        public async Task AppendAlarmsAsync()
+        {
+            logClient = new LogClient();
+            // Calling GetAllAlarmsAsync and storing the values in a list
+            IEnumerable<AlarmEntity> alarms = await logClient.GetAllAlarmsAsync();
+            alarmList = alarms.ToList();
+
+            foreach (AlarmEntity alarm in alarmList)
+            {
+                string[] listViewItems = new string[]
+                {
+                    alarm.PartitionKey,
+                    alarm.RowKey
+                };
+                ListViewItem item = new ListViewItem(listViewItems);
+                Color alarmColor = Color.FromArgb(Convert.ToInt32(alarm.AlarmColor));
+                item.BackColor = alarmColor;
+                lvAlarm.Items.Add(item);
+            }
         }
 
         private void LvAlarm_DrawItem(object sender, DrawListViewItemEventArgs e)
@@ -102,18 +126,6 @@ namespace ProjectIndustrialControlSystems.UserControls
             e.DrawDefault = true; // Use the default style to draw column headers
         }
 
-        public void AddItem(string text, Color backColor, string timestamp)
-        {
-            string[] listViewItems = new string[]
-            {
-                text,
-                timestamp
-            };
-            ListViewItem item = new ListViewItem(listViewItems);
-            item.BackColor = backColor;
-            lvAlarm.Items.Add(item);
-        }
-
         private void btnAcknowledgeAlarm_Click(object sender, EventArgs e)
         {
             if (lvAlarm.SelectedItems.Count > 0)
@@ -145,17 +157,9 @@ namespace ProjectIndustrialControlSystems.UserControls
 
         private void button1_Click(object sender, EventArgs e)
         {
-            alarmEntity = new AlarmEntity("This is an alarm", false, DateTime.Now.ToString(), false, Color.Red);
-            AddItem(alarmEntity.PartitionKey, alarmEntity.AlarmColor, alarmEntity.RowKey);
-            logClient.AddAlarmEntity("alarms", alarmEntity);
-            //AddItem("This is an alarm", Color.Red, DateTime.Now.ToString());
-            //AddItem("This is an alarm", Color.Red, DateTime.Now.ToString());
-            //AddItem("This is an alarm", Color.White, DateTime.Now.ToString());
-            //AddItem("This is an alarm", Color.Red, DateTime.Now.ToString());
-            //AddItem("This is an alarm", Color.Yellow, DateTime.Now.ToString());
-            //AddItem("This is an alarm", Color.Red, DateTime.Now.ToString());
-            //AddItem("This is an alarm", Color.Yellow, DateTime.Now.ToString());
-            //AddItem("This is an alarm", Color.Red, DateTime.Now.ToString());
+            alarmEntity = new AlarmEntity("Dette er en Alarm", false, DateTime.Now, false, Color.Red);
+
+            logClient.AddAlarmEntity("Alarms", alarmEntity);
         }
     }
 }

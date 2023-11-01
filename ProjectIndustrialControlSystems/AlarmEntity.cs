@@ -11,14 +11,14 @@ namespace ProjectIndustrialControlSystems
 {
     public class AlarmEntity : ITableEntity
     {
-        public string PartitionKey { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string RowKey { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        DateTimeOffset? ITableEntity.Timestamp { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public ETag ETag { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string PartitionKey { get; set; }
+        public string RowKey { get; set; }
+        public DateTimeOffset? Timestamp { get; set; }
+        public ETag ETag { get; set; }
 
-        private Color alarmColor;
+        private string alarmColor;
 
-        public Color AlarmColor
+        public string AlarmColor
         {
             get { return alarmColor; }
             set { alarmColor = value; }
@@ -40,12 +40,17 @@ namespace ProjectIndustrialControlSystems
 			set { state = value; }
 		}
 
-        public AlarmEntity(string title, bool acknowledge, string timeStamp, bool state, Color alarmColor)
+        public AlarmEntity()
+        {
+            
+        }
+
+        public AlarmEntity(string title, bool acknowledge, DateTime timeStamp, bool state, Color alarmColor)
         {
 			this.PartitionKey = title;
-            this.alarmColor = alarmColor;
+            this.alarmColor = alarmColor.ToArgb().ToString();
             this.acknowledge = acknowledge;
-			this.RowKey = timeStamp;
+			this.RowKey = timeStamp.ToString();
 			this.state = state;
 
         }

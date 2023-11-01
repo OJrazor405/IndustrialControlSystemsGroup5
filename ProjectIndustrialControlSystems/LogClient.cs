@@ -15,7 +15,7 @@ namespace ProjectIndustrialControlSystems
     internal class LogClient
     {
         TableClient tableClient;
-        Azure.Data.Tables.TableEntity tableEntity;
+        TableEntity tableEntity;
         private string connectionString = ConfigurationManager.ConnectionStrings["conAlarmDB"].ConnectionString;
 
         public void AddAlarmEntity(string tableName, AlarmEntity alarm)
@@ -27,7 +27,7 @@ namespace ProjectIndustrialControlSystems
             {
                 { "Acknowledged", alarm.Acknowledge },
                 { "State", alarm.State },
-                { "AlarmColor", alarm.AlarmColor.ToString() },
+                { "AlarmColor", alarm.AlarmColor },
             };
             tableClient.AddEntity(tableEntity);
         }
@@ -37,36 +37,16 @@ namespace ProjectIndustrialControlSystems
             IList<AlarmEntity> alarmList = new List<AlarmEntity>();
             TableClient tableClient = new TableClient(connectionString, "Alarms");
 
-            var alarms = tableClient.Query<AlarmEntity>();
-            foreach (var alarm in alarms)
+            await Task.Run(() =>
             {
-                alarmList.Add(alarm);
-            }
+                var alarms = tableClient.Query<AlarmEntity>();
+                foreach (AlarmEntity alarm in alarms)
+                {
+                    alarmList.Add(alarm);
+                }
+            });
 
             return alarmList;
         }
-
-        //public List<AlarmEntity> GetActiveAlarmEntities()
-        //{
-        //    AlarmEntity alarmEntity;
-        //    List<AlarmEntity> alarms = new List<AlarmEntity>();
-        //    TableClient tableClient = new TableClient(connectionString, "Alarms");
-
-        //    //foreach (var entity in tableClient.Query<TableEntity>())
-        //    //{
-        //    //    var noe = entity.Keys.
-        //    //}
-
-        //    foreach (var entity in tableClient.Query<TableEntity>())
-        //    {
-        //        foreach (var property in entity.Keys)
-        //        {
-        //            alarmEntinproperty.ElementAt(2);
-        //        };
-        //    }
-
-        //    return alarms;
-        //}
-
     }
 }
