@@ -27,7 +27,5 @@ namespace ProjectIndustrialControlSystems
 
             var response = await serviceClient.InvokeDeviceMethodAsync(targetDeviceId, methodInvocation);
         }
-
-
     }
 }

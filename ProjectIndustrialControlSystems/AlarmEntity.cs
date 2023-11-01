@@ -4,19 +4,17 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Data.Tables;
 
 namespace ProjectIndustrialControlSystems 
 {
-    public class AlarmEntity
+    public class AlarmEntity : ITableEntity
     {
-		private string title;
-
-		public string Title
-		{
-			get { return title; }
-			set { title = value; }
-		}
+        public string PartitionKey { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string RowKey { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        DateTimeOffset? ITableEntity.Timestamp { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public ETag ETag { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         private Color alarmColor;
 
@@ -34,14 +32,6 @@ namespace ProjectIndustrialControlSystems
 			set { acknowledge = value; }
 		}
 
-		private DateTime timeStamp;
-
-		public DateTime TimeStamp
-		{
-			get { return timeStamp; }
-			set { timeStamp = value; }
-		}
-
 		private bool state;
 
 		public bool State
@@ -50,12 +40,12 @@ namespace ProjectIndustrialControlSystems
 			set { state = value; }
 		}
 
-        public AlarmEntity(string title, bool acknowledge, DateTime timeStamp, bool state, Color alarmColor)
+        public AlarmEntity(string title, bool acknowledge, string timeStamp, bool state, Color alarmColor)
         {
-			this.title = title;
+			this.PartitionKey = title;
             this.alarmColor = alarmColor;
             this.acknowledge = acknowledge;
-			this.timeStamp = timeStamp;
+			this.RowKey = timeStamp;
 			this.state = state;
 
         }

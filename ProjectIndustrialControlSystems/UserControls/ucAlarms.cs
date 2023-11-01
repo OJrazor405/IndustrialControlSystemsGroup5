@@ -16,10 +16,17 @@ namespace ProjectIndustrialControlSystems.UserControls
 {
     public partial class ucAlarms : UserControl
     {
+        LogClient logClient;
+        AlarmEntity alarmEntity;
+
         public ucAlarms()
         {
             InitializeComponent();
             InitializeListView();
+            logClient = new LogClient();
+            IEnumerable<AlarmEntity> alarms = await logClient.GetAllAlarmsAsync();
+            List<AlarmEntity> alarmList = alarms.ToList();
+
         }
 
         private void InitializeListView()
@@ -138,16 +145,17 @@ namespace ProjectIndustrialControlSystems.UserControls
 
         private void button1_Click(object sender, EventArgs e)
         {
-            AddItem("This is an alarm", Color.Red, DateTime.Now.ToString());
-            AddItem("This is info", Color.White, DateTime.Now.ToString());
-            AddItem("This is an alarm", Color.Red, DateTime.Now.ToString());
-            AddItem("This is an alarm", Color.Red, DateTime.Now.ToString());
-            AddItem("This is an alarm", Color.White, DateTime.Now.ToString());
-            AddItem("This is an alarm", Color.Red, DateTime.Now.ToString());
-            AddItem("This is an alarm", Color.Yellow, DateTime.Now.ToString());
-            AddItem("This is an alarm", Color.Red, DateTime.Now.ToString());
-            AddItem("This is an alarm", Color.Yellow, DateTime.Now.ToString());
-            AddItem("This is an alarm", Color.Red, DateTime.Now.ToString());
+            alarmEntity = new AlarmEntity("This is an alarm", false, DateTime.Now.ToString(), false, Color.Red);
+            AddItem(alarmEntity.PartitionKey, alarmEntity.AlarmColor, alarmEntity.RowKey);
+            logClient.AddAlarmEntity("alarms", alarmEntity);
+            //AddItem("This is an alarm", Color.Red, DateTime.Now.ToString());
+            //AddItem("This is an alarm", Color.Red, DateTime.Now.ToString());
+            //AddItem("This is an alarm", Color.White, DateTime.Now.ToString());
+            //AddItem("This is an alarm", Color.Red, DateTime.Now.ToString());
+            //AddItem("This is an alarm", Color.Yellow, DateTime.Now.ToString());
+            //AddItem("This is an alarm", Color.Red, DateTime.Now.ToString());
+            //AddItem("This is an alarm", Color.Yellow, DateTime.Now.ToString());
+            //AddItem("This is an alarm", Color.Red, DateTime.Now.ToString());
         }
     }
 }
