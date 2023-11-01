@@ -46,7 +46,7 @@ namespace ProjectIndustrialControlSystems.UserControls
             lvAlarm.DrawColumnHeader += LvAlarm_DrawColumnHeader;
 
             System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-            timer.Tick()
+            
 
 
         }
