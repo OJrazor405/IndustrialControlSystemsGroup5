@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnAcknowledgeAlarm = new System.Windows.Forms.Button();
             this.btnDeleteAlarm = new System.Windows.Forms.Button();
             this.lvAlarm = new System.Windows.Forms.ListView();
             this.button1 = new System.Windows.Forms.Button();
+            this.tmrAlarm = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // btnAcknowledgeAlarm
@@ -78,6 +80,10 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // tmrAlarm
+            // 
+            this.tmrAlarm.Interval = 5000;
+            // 
             // ucAlarms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -99,5 +105,6 @@
         private System.Windows.Forms.Button btnDeleteAlarm;
         private System.Windows.Forms.ListView lvAlarm;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Timer tmrAlarm;
     }
 }
