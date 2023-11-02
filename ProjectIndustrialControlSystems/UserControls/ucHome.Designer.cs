@@ -46,6 +46,7 @@
             this.btnEmptyLog = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.tbPoolTemp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSetPoolTemp)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -209,6 +210,7 @@
             // groupBox1
             // 
             this.groupBox1.AutoSize = true;
+            this.groupBox1.Controls.Add(this.checkBox2);
             this.groupBox1.Controls.Add(this.txtSetPoolTemp);
             this.groupBox1.Controls.Add(this.txtPoolTemp);
             this.groupBox1.Controls.Add(this.label7);
@@ -223,7 +225,7 @@
             this.groupBox1.Controls.Add(this.tbPoolTemp);
             this.groupBox1.Location = new System.Drawing.Point(32, 318);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(637, 468);
+            this.groupBox1.Size = new System.Drawing.Size(637, 529);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Temperature controls";
@@ -239,6 +241,17 @@
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Cover controls";
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(150, 436);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(131, 36);
+            this.checkBox2.TabIndex = 21;
+            this.checkBox2.Text = "Manuel";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // ucHome
             // 
@@ -280,5 +293,6 @@
         private System.Windows.Forms.Button btnEmptyLog;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.CheckBox checkBox2;
     }
 }
