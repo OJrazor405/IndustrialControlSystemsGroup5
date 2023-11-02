@@ -16,9 +16,10 @@ namespace ProjectIndustrialControlSystems
     {
         //Makes an instance of the objects to display in Form1
         NavigationControl navigationControl;
-        ucHome homePage = new ucHome();
-        ucAlarms alarmPage = new ucAlarms();
-        ucSettings settingsPage = new ucSettings();
+
+        ucAlarms alarmPage;
+        ucHome homePage;
+        ucSettings settingsPage;
 
         public Form1()
         {
@@ -28,7 +29,9 @@ namespace ProjectIndustrialControlSystems
 
         private void InitializeNavigationControl()
         {
-
+            alarmPage = new ucAlarms(); // Initialize alarmPage here
+            homePage = new ucHome(alarmPage); // Initialize homePage here
+            settingsPage = new ucSettings();
             List<UserControl> userControls = new List<UserControl>()
             {
                 homePage,

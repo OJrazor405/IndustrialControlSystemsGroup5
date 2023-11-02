@@ -26,7 +26,7 @@ namespace ProjectIndustrialControlSystems.UserControls
         {
             InitializeComponent();
             InitializeListView();
-            SetupAlarmUpdateTimer();
+            //SetupAlarmUpdateTimer();
         }
 
         private void InitializeListView()
@@ -47,15 +47,17 @@ namespace ProjectIndustrialControlSystems.UserControls
             lvAlarm.DrawItem += LvAlarm_DrawItem;
             lvAlarm.DrawSubItem += LvAlarm_DrawSubItem;
             lvAlarm.DrawColumnHeader += LvAlarm_DrawColumnHeader;
+            UpdateAlarmsAsync();
+
         }
 
-        private void SetupAlarmUpdateTimer()
-        {
-            _alarmUpdateTimer = new System.Timers.Timer(1000); // Set up the timer for 1 second
-            _alarmUpdateTimer.Elapsed += async (sender, e) => await UpdateAlarmsAsync();
-            _alarmUpdateTimer.AutoReset = true;
-            _alarmUpdateTimer.Enabled = true;
-        }
+        //private void SetupAlarmUpdateTimer()
+        //{
+        //    _alarmUpdateTimer = new System.Timers.Timer(1000); // Set up the timer for 1 second
+        //    _alarmUpdateTimer.Elapsed += async (sender, e) => await UpdateAlarmsAsync();
+        //    _alarmUpdateTimer.AutoReset = true;
+        //    _alarmUpdateTimer.Enabled = true;
+        //}
 
         public async Task UpdateAlarmsAsync()
         {
@@ -240,6 +242,8 @@ namespace ProjectIndustrialControlSystems.UserControls
         private void button1_Click(object sender, EventArgs e)
         {
             AddTestAlarm();
+            UpdateAlarmsAsync();
+
         }
     }
 }

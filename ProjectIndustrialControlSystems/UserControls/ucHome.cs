@@ -21,17 +21,19 @@ namespace ProjectIndustrialControlSystems.UserControls
         SensorData sensorData;
         AlarmEntity alarmEntityLow;
         AlarmEntity alarmEntityHigh;
+        ucAlarms alarmPage;
         bool tempMan = false;
         bool alarmSetHigh = false;
         bool alarmSetLow = false;
 
-        public ucHome()
+        public ucHome(ucAlarms alarmPage)
         {
             InitializeComponent();
             StartDataLoading();
             logClient = new LogClient();
             txtSetPoolTemp.Text = tbSetPoolTemp.Value.ToString();
             txtPoolTemp.Text = tbPoolTemp.Value.ToString();
+            this.alarmPage = alarmPage;
         }
         private async Task StartDataLoading()
         {
@@ -57,6 +59,7 @@ namespace ProjectIndustrialControlSystems.UserControls
                         alarmEntityLow = new AlarmEntity("Temperatur basseng lav", false, DateTime.Now, true, Color.Red);
                         logClient.AddAlarmEntity(alarmEntityLow);
                         alarmSetLow = true;
+                        alarmPage.UpdateAlarmsAsync();
                     }
                 }
                 else if (tbPoolTemp.Value > tbSetPoolTemp.Value - 5 && alarmSetLow == true)
@@ -65,6 +68,8 @@ namespace ProjectIndustrialControlSystems.UserControls
                     alarmEntityLow.State = false;
                     alarmEntityLow.AlarmColor = Color.Yellow.ToArgb().ToString();
                     await logClient.UpdateAlarm(alarmEntityLow);
+                    alarmPage.UpdateAlarmsAsync();
+
                 }
                 else if (tbPoolTemp.Value >= tbSetPoolTemp.Value + 5)
                 {
@@ -73,6 +78,8 @@ namespace ProjectIndustrialControlSystems.UserControls
                         alarmEntityHigh = new AlarmEntity("Temperatur basseng høy", false, DateTime.Now, true, Color.Red);
                         logClient.AddAlarmEntity(alarmEntityHigh);
                         alarmSetHigh = true;
+                        alarmPage.UpdateAlarmsAsync();
+
                     }
                 }
                 else if (tbPoolTemp.Value < tbSetPoolTemp.Value + 5 && alarmSetHigh == true)
@@ -81,6 +88,7 @@ namespace ProjectIndustrialControlSystems.UserControls
                     alarmEntityHigh.State = false;
                     alarmEntityHigh.AlarmColor = Color.Yellow.ToArgb().ToString();
                     await logClient.UpdateAlarm(alarmEntityHigh);
+                    alarmPage.UpdateAlarmsAsync();
 
                 }
             }
@@ -98,6 +106,8 @@ namespace ProjectIndustrialControlSystems.UserControls
                         alarmEntityLow = new AlarmEntity("Temperatur basseng lav", false, DateTime.Now, true, Color.Red);
                         logClient.AddAlarmEntity(alarmEntityLow);
                         alarmSetLow = true;
+                        alarmPage.UpdateAlarmsAsync();
+
                     }
                 }
                 else if (tbPoolTemp.Value > tbSetPoolTemp.Value - 5 && alarmSetLow == true)
@@ -106,6 +116,8 @@ namespace ProjectIndustrialControlSystems.UserControls
                     alarmEntityLow.State = false;
                     alarmEntityLow.AlarmColor = Color.Yellow.ToArgb().ToString();
                     await logClient.UpdateAlarm(alarmEntityLow);
+                    alarmPage.UpdateAlarmsAsync();
+
                 }
                 else if (tbPoolTemp.Value >= tbSetPoolTemp.Value + 5)
                 {
@@ -114,6 +126,8 @@ namespace ProjectIndustrialControlSystems.UserControls
                         alarmEntityHigh = new AlarmEntity("Temperatur basseng høy", false, DateTime.Now, true, Color.Red);
                         logClient.AddAlarmEntity(alarmEntityHigh);
                         alarmSetHigh = true;
+                        alarmPage.UpdateAlarmsAsync();
+
                     }
                 }
                 else if (tbPoolTemp.Value < tbSetPoolTemp.Value + 5 && alarmSetHigh == true)
@@ -122,6 +136,7 @@ namespace ProjectIndustrialControlSystems.UserControls
                     alarmEntityHigh.State = false;
                     alarmEntityHigh.AlarmColor = Color.Yellow.ToArgb().ToString();
                     await logClient.UpdateAlarm(alarmEntityHigh);
+                    alarmPage.UpdateAlarmsAsync();
 
                 }
             }          
