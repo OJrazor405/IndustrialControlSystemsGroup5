@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Security.Claims;
@@ -17,15 +18,15 @@ namespace ProjectIndustrialControlSystems.UserControls
 {
     public partial class ucAlarms : UserControl
     {
-        LogClient logClient = new LogClient();
-        List<AlarmEntity> alarmList;
-        AlarmEntity alarmEntity;
+        private LogClient _logClient = new LogClient();
+        private List<AlarmEntity> _alarmList;
+        private System.Timers.Timer _alarmUpdateTimer;
 
         public ucAlarms()
         {
             InitializeComponent();
             InitializeListView();
-            InitializeLogger();
+            SetupAlarmUpdateTimer();
         }
 
         private void InitializeListView()
@@ -47,26 +48,26 @@ namespace ProjectIndustrialControlSystems.UserControls
             lvAlarm.DrawColumnHeader += LvAlarm_DrawColumnHeader;
         }
 
-        private async void InitializeLogger()
+        private void SetupAlarmUpdateTimer()
         {
-            while (true)
-            {
-                await AppendAlarmsAsync();
-            }
+            _alarmUpdateTimer = new System.Timers.Timer(1000); // Set up the timer for 1 second
+            _alarmUpdateTimer.Elapsed += async (sender, e) => await UpdateAlarmsAsync();
+            _alarmUpdateTimer.AutoReset = true;
+            _alarmUpdateTimer.Enabled = true;
         }
 
-        public async Task AppendAlarmsAsync()
+        public async Task UpdateAlarmsAsync()
         {
             // Calling GetAllAlarmsAsync and storing the values in a list
-            IEnumerable<AlarmEntity> alarms = await logClient.GetAllAlarmsAsync();
-            alarmList = alarms.ToList();
+            IEnumerable<AlarmEntity> alarms = await _logClient.GetAllAlarmsAsync();
+            _alarmList = alarms.ToList();
             List<ListViewItem> list = new List<ListViewItem>();
-            int numDBAlarms = alarmList.Count;
+            int numDBAlarms = _alarmList.Count;
             int numExistAlarms = lvAlarm.Items.Count;
 
-            if (numDBAlarms > numExistAlarms) 
+            if (numDBAlarms > numExistAlarms)
             {
-                foreach (AlarmEntity alarm in alarmList)
+                foreach (AlarmEntity alarm in _alarmList)
                 {
                     string[] listViewItem = new string[]
                     {
@@ -80,10 +81,25 @@ namespace ProjectIndustrialControlSystems.UserControls
                     list.Add(item);
                 }
 
-                for (int i = numExistAlarms; i < numDBAlarms; i++)
+                if (lvAlarm.InvokeRequired)
                 {
-                    lvAlarm.Items.Add(list[i]);
+                    lvAlarm.Invoke(new MethodInvoker(delegate
+                    {
+                        UpdateListViewItems(list, numExistAlarms, numDBAlarms);
+                    }));
                 }
+                else
+                {
+                    UpdateListViewItems(list, numExistAlarms, numDBAlarms);
+                }
+            }
+        }
+
+        private void UpdateListViewItems(List<ListViewItem> list, int numExistAlarms, int numDBAlarms)
+        {
+            for (int i = numExistAlarms; i < numDBAlarms; i++)
+            {
+                lvAlarm.Items.Add(list[i]);
             }
         }
 
@@ -141,7 +157,7 @@ namespace ProjectIndustrialControlSystems.UserControls
             e.DrawDefault = true; // Use the default style to draw column headers
         }
 
-        private async void btnAcknowledgeAlarm_Click(object sender, EventArgs e)
+        private async void AcknowledgeSelectedAlarms()
         {
             if (lvAlarm.SelectedItems.Count > 0)
             {
@@ -157,7 +173,7 @@ namespace ProjectIndustrialControlSystems.UserControls
                         alarm.RowKey = item.SubItems[1].Text;
                         alarm.Acknowledge = bool.Parse(item.SubItems[2].Text);
                         alarm.AlarmColor = item.BackColor.ToArgb().ToString();
-                        await logClient.UpdateAlarm(alarm);
+                        await _logClient.UpdateAlarm(alarm);
                     }
                 }
                 else
@@ -171,13 +187,13 @@ namespace ProjectIndustrialControlSystems.UserControls
                         alarm.RowKey = item.SubItems[1].Text;
                         alarm.Acknowledge = bool.Parse(item.SubItems[2].Text);
                         alarm.AlarmColor = item.BackColor.ToArgb().ToString();
-                        await logClient.UpdateAlarm(alarm);
+                        await _logClient.UpdateAlarm(alarm);
                     }
                 }
             }
         }
 
-        private async void btnDeleteAlarm_Click(object sender, EventArgs e)
+        private async void DeleteSelectedAlarms()
         {
             if (lvAlarm.SelectedItems.Count > 0) // Check if at least one item is selected
             {
@@ -186,17 +202,33 @@ namespace ProjectIndustrialControlSystems.UserControls
                     AlarmEntity alarm = new AlarmEntity();
                     alarm.PartitionKey = item.SubItems[0].Text;
                     alarm.RowKey = item.SubItems[1].Text;
-                    await logClient.DeleteAlarm(alarm);
+                    await _logClient.DeleteAlarm(alarm);
                     lvAlarm.Items.Remove(item);
                 }
             }
         }
 
+        private void AddTestAlarm()
+        {
+            AlarmEntity alarmEntity = new AlarmEntity("Dette er en Alarm", false, DateTime.Now, false, Color.Red);
+
+            _logClient.AddAlarmEntity(alarmEntity);
+        }
+
+        // Event handlers for button clicks that call the appropriate methods
+        private void btnAcknowledgeAlarm_Click(object sender, EventArgs e)
+        {
+            AcknowledgeSelectedAlarms();
+        }
+
+        private void btnDeleteAlarm_Click(object sender, EventArgs e)
+        {
+            DeleteSelectedAlarms();
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
-            alarmEntity = new AlarmEntity("Dette er en Alarm", false, DateTime.Now, false, Color.Red);
-
-            logClient.AddAlarmEntity(alarmEntity);
+            AddTestAlarm();
         }
     }
 }
