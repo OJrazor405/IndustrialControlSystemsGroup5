@@ -94,13 +94,6 @@ namespace ProjectIndustrialControlSystems.UserControls
 
                     logClient.AddAlarmEntity(alarmEntity);
                 }
-                        alarmSet = true;
-                    }
-                }
-                else if (tbPoolTemp.Value < tbSetPoolTemp.Value + 5)
-                {
-                    alarmSet = false;
-                }
             }          
 
         }
