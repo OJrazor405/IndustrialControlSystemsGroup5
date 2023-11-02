@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
+using Newtonsoft.Json;
 
 namespace ProjectIndustrialControlSystems
 {
@@ -21,11 +22,24 @@ namespace ProjectIndustrialControlSystems
             targetDeviceId = "piHub";
         }
 
-        public async void IoTMethodParse(string method)
+        //public async Task<string> IoTMethodParse(string method)
+        //{
+        //    var methodInvocation = new CloudToDeviceMethod(method) { ResponseTimeout = TimeSpan.FromSeconds(30) };
+
+        //    var response = await serviceClient.InvokeDeviceMethodAsync(targetDeviceId, methodInvocation);
+
+        //    return response.GetPayloadAsJson();
+        //}
+        public async Task<SensorData> IoTMethodParse(string method)
         {
             var methodInvocation = new CloudToDeviceMethod(method) { ResponseTimeout = TimeSpan.FromSeconds(30) };
 
             var response = await serviceClient.InvokeDeviceMethodAsync(targetDeviceId, methodInvocation);
+
+            var jsonResponse = response.GetPayloadAsJson();
+            var sensorData = JsonConvert.DeserializeObject<SensorData>(jsonResponse);
+
+            return sensorData;
         }
     }
 }
