@@ -17,7 +17,7 @@ namespace ProjectIndustrialControlSystems.UserControls
 {
     public partial class ucAlarms : UserControl
     {
-        LogClient logClient;
+        LogClient logClient = new LogClient();
         List<AlarmEntity> alarmList;
         AlarmEntity alarmEntity;
 
@@ -25,9 +25,10 @@ namespace ProjectIndustrialControlSystems.UserControls
         {
             InitializeComponent();
             InitializeListView();
+            InitializeLogger();
         }
 
-        private async void InitializeListView()
+        private void InitializeListView()
         {
             lvAlarm.View = View.Details;
             lvAlarm.CheckBoxes = true;
@@ -44,31 +45,44 @@ namespace ProjectIndustrialControlSystems.UserControls
             lvAlarm.DrawItem += LvAlarm_DrawItem;
             lvAlarm.DrawSubItem += LvAlarm_DrawSubItem;
             lvAlarm.DrawColumnHeader += LvAlarm_DrawColumnHeader;
+        }
 
-            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-            
-
-
+        private async void InitializeLogger()
+        {
+            while (true)
+            {
+                await AppendAlarmsAsync();
+            }
         }
 
         public async Task AppendAlarmsAsync()
         {
-            logClient = new LogClient();
             // Calling GetAllAlarmsAsync and storing the values in a list
             IEnumerable<AlarmEntity> alarms = await logClient.GetAllAlarmsAsync();
             alarmList = alarms.ToList();
+            List<ListViewItem> list = new List<ListViewItem>();
+            int numDBAlarms = alarmList.Count;
+            int numExistAlarms = lvAlarm.Items.Count;
 
-            foreach (AlarmEntity alarm in alarmList)
+            if (numDBAlarms > numExistAlarms) 
             {
-                string[] listViewItems = new string[]
+                foreach (AlarmEntity alarm in alarmList)
                 {
+                    string[] listViewItem = new string[]
+                    {
                     alarm.PartitionKey,
                     alarm.RowKey
-                };
-                ListViewItem item = new ListViewItem(listViewItems);
-                Color alarmColor = Color.FromArgb(Convert.ToInt32(alarm.AlarmColor));
-                item.BackColor = alarmColor;
-                lvAlarm.Items.Add(item);
+                    };
+                    ListViewItem item = new ListViewItem(listViewItem);
+                    Color alarmColor = Color.FromArgb(Convert.ToInt32(alarm.AlarmColor));
+                    item.BackColor = alarmColor;
+                    list.Add(item);
+                }
+
+                for (int i = numExistAlarms; i < numDBAlarms; i++)
+                {
+                    lvAlarm.Items.Add(list[i]);
+                }
             }
         }
 
@@ -126,7 +140,7 @@ namespace ProjectIndustrialControlSystems.UserControls
             e.DrawDefault = true; // Use the default style to draw column headers
         }
 
-        private void btnAcknowledgeAlarm_Click(object sender, EventArgs e)
+        private async void btnAcknowledgeAlarm_Click(object sender, EventArgs e)
         {
             if (lvAlarm.SelectedItems.Count > 0)
             {
@@ -135,21 +149,46 @@ namespace ProjectIndustrialControlSystems.UserControls
                 {
                     selectedItem.SubItems.Add("Acknowledged");
                     selectedItem.BackColor = Color.Yellow;
+                    foreach (ListViewItem item in lvAlarm.SelectedItems)
+                    {
+                        AlarmEntity alarm = new AlarmEntity();
+                        alarm.PartitionKey = item.SubItems[0].Text;
+                        alarm.RowKey = item.SubItems[1].Text;
+                        if (item.SubItems[2].Text == "Ackowledge")
+                        {
+                            alarm.Acknowledge = true;
+                        }
+                        alarm.AlarmColor = item.BackColor.ToArgb().ToString();
+                        await logClient.UpdateAlarm(alarm);
+                    }
                 }
                 else
                 {
                     selectedItem.SubItems[2].Text = "Acknowledged";
                     selectedItem.BackColor = Color.Yellow;
+                    foreach (ListViewItem item in lvAlarm.SelectedItems)
+                    {
+                        AlarmEntity alarm = new AlarmEntity();
+                        alarm.PartitionKey = item.SubItems[0].Text;
+                        alarm.RowKey = item.SubItems[1].Text;
+                        alarm.Acknowledge = bool.Parse(item.SubItems[2].Text);
+                        alarm.AlarmColor = item.BackColor.ToArgb().ToString();
+                        await logClient.UpdateAlarm(alarm);
+                    }
                 }
             }
         }
 
-        private void btnDeleteAlarm_Click(object sender, EventArgs e)
+        private async void btnDeleteAlarm_Click(object sender, EventArgs e)
         {
             if (lvAlarm.SelectedItems.Count > 0) // Check if at least one item is selected
             {
                 foreach (ListViewItem item in lvAlarm.SelectedItems) //Deletes all selected items
                 {
+                    AlarmEntity alarm = new AlarmEntity();
+                    alarm.PartitionKey = item.SubItems[0].Text;
+                    alarm.RowKey = item.SubItems[1].Text;
+                    await logClient.DeleteAlarm(alarm);
                     lvAlarm.Items.Remove(item);
                 }
             }
@@ -159,7 +198,7 @@ namespace ProjectIndustrialControlSystems.UserControls
         {
             alarmEntity = new AlarmEntity("Dette er en Alarm", false, DateTime.Now, false, Color.Red);
 
-            logClient.AddAlarmEntity("Alarms", alarmEntity);
+            logClient.AddAlarmEntity(alarmEntity);
         }
     }
 }
