@@ -52,8 +52,8 @@ namespace ProjectIndustrialControlSystems.UserControls
                 {
                     if (!alarmSet)
                     {
-                        alarmEntity = new AlarmEntity("Temperatur basseng lav", false, DateTime.Now, false, Color.Red);
-                        logClient.AddAlarmEntity("Alarms", alarmEntity);
+                        alarmEntity = new AlarmEntity("Temperatur basseng lav", false, DateTime.Now, true, Color.Red);
+                        logClient.AddAlarmEntity(alarmEntity);
                         alarmSet = true;
                     }
                 }
@@ -65,8 +65,8 @@ namespace ProjectIndustrialControlSystems.UserControls
                 {
                     if (!alarmSet)
                     {
-                        alarmEntity = new AlarmEntity("Temperatur basseng høy", false, DateTime.Now, false, Color.Red);
-                        logClient.AddAlarmEntity("Alarms", alarmEntity);
+                        alarmEntity = new AlarmEntity("Temperatur basseng høy", false, DateTime.Now, true, Color.Red);
+                        logClient.AddAlarmEntity(alarmEntity);
                         alarmSet = true;
                     }
                 }
@@ -84,15 +84,29 @@ namespace ProjectIndustrialControlSystems.UserControls
                 txtPoolTemp.Text = tbPoolTemp.Value.ToString("0");
                 if (tbPoolTemp.Value <= tbSetPoolTemp.Value - 5)
                 {
-                    alarmEntity = new AlarmEntity("Temperatur basseng lav", false, DateTime.Now, false, Color.Red);
-
-                    logClient.AddAlarmEntity("Alarms", alarmEntity);
+                    if (!alarmSet)
+                    {
+                        alarmEntity = new AlarmEntity("Temperatur basseng lav", false, DateTime.Now, true, Color.Red);
+                        logClient.AddAlarmEntity(alarmEntity);
+                        alarmSet = true;
+                    }
+                }
+                else if (tbPoolTemp.Value > tbSetPoolTemp.Value - 5)
+                {
+                    alarmSet = false;
                 }
                 else if (tbPoolTemp.Value >= tbSetPoolTemp.Value + 5)
                 {
-                    alarmEntity = new AlarmEntity("Temperatur basseng høy", false, DateTime.Now, false, Color.Red);
-
-                    logClient.AddAlarmEntity("Alarms", alarmEntity);
+                    if (!alarmSet)
+                    {
+                        alarmEntity = new AlarmEntity("Temperatur basseng høy", false, DateTime.Now, true, Color.Red);
+                        logClient.AddAlarmEntity(alarmEntity);
+                        alarmSet = true;
+                    }
+                }
+                else if (tbPoolTemp.Value < tbSetPoolTemp.Value + 5)
+                {
+                    alarmSet = false;
                 }
             }          
 
