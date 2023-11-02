@@ -67,36 +67,35 @@ namespace ProjectIndustrialControlSystems.UserControls
             List<ListViewItem> list = new List<ListViewItem>();
             int numDBAlarms = _alarmList.Count;
             int numExistAlarms = lvAlarm.Items.Count;
+            lvAlarm.Items.Clear();
 
-            if (numDBAlarms > numExistAlarms)
+            foreach (AlarmEntity alarm in _alarmList.OrderByDescending(a => a.Timestamp))
             {
-                foreach (AlarmEntity alarm in _alarmList)
+                string[] listViewItem = new string[]
                 {
-                    string[] listViewItem = new string[]
-                    {
-                        alarm.PartitionKey,
-                        alarm.RowKey,
-                        alarm.Acknowledged.ToString(),
-                        alarm.State.ToString(),
-                    };
-                    ListViewItem item = new ListViewItem(listViewItem);
-                    Color alarmColor = Color.FromArgb(Convert.ToInt32(alarm.AlarmColor));
-                    item.BackColor = alarmColor;
-                    list.Add(item);
-                }
-
-                if (lvAlarm.InvokeRequired)
-                {
-                    lvAlarm.Invoke(new MethodInvoker(delegate
-                    {
-                        UpdateListViewItems(list, numExistAlarms, numDBAlarms);
-                    }));
-                }
-                else
-                {
-                    UpdateListViewItems(list, numExistAlarms, numDBAlarms);
-                }
+                    alarm.PartitionKey,
+                    alarm.RowKey,
+                    alarm.Acknowledged.ToString(),
+                    alarm.State.ToString(),
+                };
+                ListViewItem item = new ListViewItem(listViewItem);
+                Color alarmColor = Color.FromArgb(Convert.ToInt32(alarm.AlarmColor));
+                item.BackColor = alarmColor;
+                lvAlarm.Items.Add(item);
             }
+
+            //if (lvAlarm.InvokeRequired)
+            //{
+            //    lvAlarm.Invoke(new MethodInvoker(delegate
+            //    {
+            //        UpdateListViewItems(list, numExistAlarms, numDBAlarms);
+            //    }));
+            //}
+            //else
+            //{
+            //    UpdateListViewItems(list, numExistAlarms, numDBAlarms);
+            //}
+            
         }
 
         private void UpdateListViewItems(List<ListViewItem> list, int numExistAlarms, int numDBAlarms)
