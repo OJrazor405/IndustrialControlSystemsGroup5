@@ -24,12 +24,12 @@ namespace ProjectIndustrialControlSystems
             set { alarmColor = value; }
         }
 
-        private bool acknowledge;
+        private bool acknowledged;
 
-		public bool Acknowledge
+		public bool Acknowledged
 		{
-			get { return acknowledge; }
-			set { acknowledge = value; }
+			get { return acknowledged; }
+			set { acknowledged = value; }
 		}
 
 		private bool state;
@@ -49,7 +49,7 @@ namespace ProjectIndustrialControlSystems
         {
 			this.PartitionKey = title;
             this.alarmColor = alarmColor.ToArgb().ToString();
-            this.acknowledge = acknowledge;
+            this.acknowledged = acknowledge;
 			this.RowKey = timeStamp.ToString();
 			this.state = state;
         }

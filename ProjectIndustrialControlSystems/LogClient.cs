@@ -26,7 +26,7 @@ namespace ProjectIndustrialControlSystems
             tableClient = new TableClient(connectionString, "Alarms");
             tableEntity = new TableEntity(partitionKey, rowKey)
             {
-                { "Acknowledged", alarm.Acknowledge },
+                { "Acknowledged", alarm.Acknowledged },
                 { "State", alarm.State },
                 { "AlarmColor", alarm.AlarmColor },
             };

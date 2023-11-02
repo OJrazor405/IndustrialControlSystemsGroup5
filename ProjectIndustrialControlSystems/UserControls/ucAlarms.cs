@@ -74,7 +74,7 @@ namespace ProjectIndustrialControlSystems.UserControls
                     {
                         alarm.PartitionKey,
                         alarm.RowKey,
-                        alarm.Acknowledge.ToString(),
+                        alarm.Acknowledged.ToString(),
                         alarm.State.ToString(),
                     };
                     ListViewItem item = new ListViewItem(listViewItem);
@@ -162,15 +162,15 @@ namespace ProjectIndustrialControlSystems.UserControls
         private async Task<string> crudAlarms(string operation)
         {
             foreach (ListViewItem item in lvAlarm.SelectedItems)
-            {
+            {;
                 AlarmEntity alarm = new AlarmEntity
-                {
-                    PartitionKey = item.SubItems[0].Text,
-                    RowKey = item.SubItems[1].Text,
-                    Acknowledge = bool.Parse(item.SubItems[2].Text),
-                    AlarmColor = item.BackColor.ToArgb().ToString(),
-                    State = bool.Parse(item.SubItems[3].Text)
-                };
+                (
+                    item.SubItems[0].Text,
+                    bool.Parse(item.SubItems[2].Text),
+                    DateTime.Parse(item.SubItems[1].Text),
+                    bool.Parse(item.SubItems[3].Text),
+                    item.BackColor
+                );
                 if (operation == "Update")
                 {
                     await _logClient.UpdateAlarm(alarm);
@@ -221,7 +221,7 @@ namespace ProjectIndustrialControlSystems.UserControls
 
         private void AddTestAlarm()
         {
-            AlarmEntity alarmEntity = new AlarmEntity("Dette er en Alarm", false, DateTime.Now, false, Color.Red);
+            AlarmEntity alarmEntity = new AlarmEntity("Dette er en Alarm", false, DateTime.Now, true, Color.Red);
 
             _logClient.AddAlarmEntity(alarmEntity);
         }
