@@ -41,6 +41,7 @@ namespace ProjectIndustrialControlSystems.UserControls
             lvAlarm.Columns.Add("Alarm Items", 200, HorizontalAlignment.Left);
             lvAlarm.Columns.Add("Timestamp", 200, HorizontalAlignment.Left);
             lvAlarm.Columns.Add("Acknowledged", 120, HorizontalAlignment.Left);
+            lvAlarm.Columns.Add("State", 120, HorizontalAlignment.Left);
 
             //Draws items to the listview
             lvAlarm.DrawItem += LvAlarm_DrawItem;
@@ -74,6 +75,7 @@ namespace ProjectIndustrialControlSystems.UserControls
                         alarm.PartitionKey,
                         alarm.RowKey,
                         alarm.Acknowledge.ToString(),
+                        alarm.State.ToString(),
                     };
                     ListViewItem item = new ListViewItem(listViewItem);
                     Color alarmColor = Color.FromArgb(Convert.ToInt32(alarm.AlarmColor));
@@ -157,6 +159,31 @@ namespace ProjectIndustrialControlSystems.UserControls
             e.DrawDefault = true; // Use the default style to draw column headers
         }
 
+        private async Task<string> crudAlarms(string operation)
+        {
+            foreach (ListViewItem item in lvAlarm.SelectedItems)
+            {
+                AlarmEntity alarm = new AlarmEntity
+                {
+                    PartitionKey = item.SubItems[0].Text,
+                    RowKey = item.SubItems[1].Text,
+                    Acknowledge = bool.Parse(item.SubItems[2].Text),
+                    AlarmColor = item.BackColor.ToArgb().ToString(),
+                    State = bool.Parse(item.SubItems[3].Text)
+                };
+                if (operation == "Update")
+                {
+                    await _logClient.UpdateAlarm(alarm);
+                }
+                else if (operation == "Delete")
+                {
+                    await _logClient.DeleteAlarm(alarm);
+                }
+            }
+
+            return operation;
+        }
+
         private async void AcknowledgeSelectedAlarms()
         {
             if (lvAlarm.SelectedItems.Count > 0)
@@ -168,27 +195,14 @@ namespace ProjectIndustrialControlSystems.UserControls
                     selectedItem.BackColor = Color.Yellow;
                     foreach (ListViewItem item in lvAlarm.SelectedItems)
                     {
-                        AlarmEntity alarm = new AlarmEntity();
-                        alarm.PartitionKey = item.SubItems[0].Text;
-                        alarm.RowKey = item.SubItems[1].Text;
-                        alarm.Acknowledge = bool.Parse(item.SubItems[2].Text);
-                        alarm.AlarmColor = item.BackColor.ToArgb().ToString();
-                        await _logClient.UpdateAlarm(alarm);
+                        await crudAlarms("Update");
                     }
                 }
                 else
                 {
                     selectedItem.SubItems[2].Text = "True";
                     selectedItem.BackColor = Color.Yellow;
-                    foreach (ListViewItem item in lvAlarm.SelectedItems)
-                    {
-                        AlarmEntity alarm = new AlarmEntity();
-                        alarm.PartitionKey = item.SubItems[0].Text;
-                        alarm.RowKey = item.SubItems[1].Text;
-                        alarm.Acknowledge = bool.Parse(item.SubItems[2].Text);
-                        alarm.AlarmColor = item.BackColor.ToArgb().ToString();
-                        await _logClient.UpdateAlarm(alarm);
-                    }
+                    await crudAlarms("Update");
                 }
             }
         }
@@ -199,10 +213,7 @@ namespace ProjectIndustrialControlSystems.UserControls
             {
                 foreach (ListViewItem item in lvAlarm.SelectedItems) //Deletes all selected items
                 {
-                    AlarmEntity alarm = new AlarmEntity();
-                    alarm.PartitionKey = item.SubItems[0].Text;
-                    alarm.RowKey = item.SubItems[1].Text;
-                    await _logClient.DeleteAlarm(alarm);
+                    await crudAlarms("Delete");
                     lvAlarm.Items.Remove(item);
                 }
             }

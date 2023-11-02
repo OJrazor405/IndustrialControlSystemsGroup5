@@ -52,7 +52,6 @@ namespace ProjectIndustrialControlSystems
             this.acknowledge = acknowledge;
 			this.RowKey = timeStamp.ToString();
 			this.state = state;
-
         }
     }
 }
