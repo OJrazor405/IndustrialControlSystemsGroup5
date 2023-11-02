@@ -26,10 +26,10 @@ namespace ProjectIndustrialControlSystems.UserControls
         {
             InitializeComponent();
             InitializeListView();
-            //SetupAlarmUpdateTimer();
+            SetupAlarmUpdateTimer();
         }
 
-        private void InitializeListView()
+        private async void InitializeListView()
         {
             lvAlarm.View = View.Details;
             lvAlarm.CheckBoxes = true;
@@ -47,17 +47,16 @@ namespace ProjectIndustrialControlSystems.UserControls
             lvAlarm.DrawItem += LvAlarm_DrawItem;
             lvAlarm.DrawSubItem += LvAlarm_DrawSubItem;
             lvAlarm.DrawColumnHeader += LvAlarm_DrawColumnHeader;
-            UpdateAlarmsAsync();
 
         }
 
-        //private void SetupAlarmUpdateTimer()
-        //{
-        //    _alarmUpdateTimer = new System.Timers.Timer(1000); // Set up the timer for 1 second
-        //    _alarmUpdateTimer.Elapsed += async (sender, e) => await UpdateAlarmsAsync();
-        //    _alarmUpdateTimer.AutoReset = true;
-        //    _alarmUpdateTimer.Enabled = true;
-        //}
+        private void SetupAlarmUpdateTimer()
+        {
+            _alarmUpdateTimer = new System.Timers.Timer(1000); // Set up the timer for 1 second
+            _alarmUpdateTimer.Elapsed += async (sender, e) => await UpdateAlarmsAsync();
+            _alarmUpdateTimer.AutoReset = true;
+            _alarmUpdateTimer.Enabled = true;
+        }
 
         public async Task UpdateAlarmsAsync()
         {
@@ -194,7 +193,14 @@ namespace ProjectIndustrialControlSystems.UserControls
                 if (selectedItem.SubItems.Count < 3)
                 {
                     selectedItem.SubItems.Add("True");
-                    selectedItem.BackColor = Color.Yellow;
+                    if (selectedItem.SubItems[3].Text == "False")
+                    {
+                        selectedItem.BackColor = Color.White;
+                    }
+                    else
+                    {
+                        selectedItem.BackColor = Color.Yellow;
+                    }
                     foreach (ListViewItem item in lvAlarm.SelectedItems)
                     {
                         await crudAlarms("Update");
@@ -203,7 +209,14 @@ namespace ProjectIndustrialControlSystems.UserControls
                 else
                 {
                     selectedItem.SubItems[2].Text = "True";
-                    selectedItem.BackColor = Color.Yellow;
+                    if (selectedItem.SubItems[3].Text == "False")
+                    {
+                        selectedItem.BackColor = Color.White;
+                    }
+                    else
+                    {
+                        selectedItem.BackColor = Color.Yellow;
+                    }
                     await crudAlarms("Update");
                 }
             }
@@ -242,8 +255,6 @@ namespace ProjectIndustrialControlSystems.UserControls
         private void button1_Click(object sender, EventArgs e)
         {
             AddTestAlarm();
-            UpdateAlarmsAsync();
-
         }
     }
 }
