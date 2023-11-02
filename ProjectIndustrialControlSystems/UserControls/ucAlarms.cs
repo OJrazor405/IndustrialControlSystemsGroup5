@@ -70,8 +70,9 @@ namespace ProjectIndustrialControlSystems.UserControls
                 {
                     string[] listViewItem = new string[]
                     {
-                    alarm.PartitionKey,
-                    alarm.RowKey
+                        alarm.PartitionKey,
+                        alarm.RowKey,
+                        alarm.Acknowledge.ToString(),
                     };
                     ListViewItem item = new ListViewItem(listViewItem);
                     Color alarmColor = Color.FromArgb(Convert.ToInt32(alarm.AlarmColor));
@@ -147,24 +148,21 @@ namespace ProjectIndustrialControlSystems.UserControls
                 ListViewItem selectedItem = lvAlarm.SelectedItems[0];
                 if (selectedItem.SubItems.Count < 3)
                 {
-                    selectedItem.SubItems.Add("Acknowledged");
+                    selectedItem.SubItems.Add("True");
                     selectedItem.BackColor = Color.Yellow;
                     foreach (ListViewItem item in lvAlarm.SelectedItems)
                     {
                         AlarmEntity alarm = new AlarmEntity();
                         alarm.PartitionKey = item.SubItems[0].Text;
                         alarm.RowKey = item.SubItems[1].Text;
-                        if (item.SubItems[2].Text == "Ackowledge")
-                        {
-                            alarm.Acknowledge = true;
-                        }
+                        alarm.Acknowledge = bool.Parse(item.SubItems[2].Text);
                         alarm.AlarmColor = item.BackColor.ToArgb().ToString();
                         await logClient.UpdateAlarm(alarm);
                     }
                 }
                 else
                 {
-                    selectedItem.SubItems[2].Text = "Acknowledged";
+                    selectedItem.SubItems[2].Text = "True";
                     selectedItem.BackColor = Color.Yellow;
                     foreach (ListViewItem item in lvAlarm.SelectedItems)
                     {

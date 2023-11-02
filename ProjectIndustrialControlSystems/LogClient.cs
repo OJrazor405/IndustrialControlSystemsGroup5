@@ -54,7 +54,7 @@ namespace ProjectIndustrialControlSystems
         {
             TableClient tableClient = new TableClient(connectionString, "Alarms");
 
-            await tableClient.UpdateEntityAsync(alarm, alarm.ETag);
+            await tableClient.UpsertEntityAsync(alarm);
 
             return "Alarm is updated";
         }
