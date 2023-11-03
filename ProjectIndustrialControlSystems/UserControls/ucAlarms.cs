@@ -168,7 +168,7 @@ namespace ProjectIndustrialControlSystems.UserControls
                     }
                     else
                     {
-                        selectedItem.BackColor = Color.Yellow;
+                        selectedItem.BackColor = Color.IndianRed;
                     }
                     foreach (ListViewItem item in lvAlarm.SelectedItems)
                     {
@@ -184,7 +184,7 @@ namespace ProjectIndustrialControlSystems.UserControls
                     }
                     else
                     {
-                        selectedItem.BackColor = Color.Yellow;
+                        selectedItem.BackColor = Color.IndianRed;
                     }
                     await crudAlarms("Update");
                 }

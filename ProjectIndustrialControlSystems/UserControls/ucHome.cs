@@ -44,7 +44,7 @@ namespace ProjectIndustrialControlSystems.UserControls
                 sensorData = await ioTClient.IoTMethodParse("SendSensorData");
                 await updateTbPoolTemp();
                 await LogPoolData();
-                Thread.Sleep(100);
+                Thread.Sleep(500);
             }
         }
 
