@@ -22,14 +22,6 @@ namespace ProjectIndustrialControlSystems
             targetDeviceId = "piHub";
         }
 
-        //public async Task<string> IoTMethodParse(string method)
-        //{
-        //    var methodInvocation = new CloudToDeviceMethod(method) { ResponseTimeout = TimeSpan.FromSeconds(30) };
-
-        //    var response = await serviceClient.InvokeDeviceMethodAsync(targetDeviceId, methodInvocation);
-
-        //    return response.GetPayloadAsJson();
-        //}
         public async Task<SensorData> IoTMethodParse(string method)
         {
             var methodInvocation = new CloudToDeviceMethod(method) { ResponseTimeout = TimeSpan.FromSeconds(30) };

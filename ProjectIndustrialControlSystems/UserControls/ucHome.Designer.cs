@@ -41,16 +41,14 @@
             this.tbSetPoolTemp = new System.Windows.Forms.TrackBar();
             this.txtPoolTemp = new System.Windows.Forms.TextBox();
             this.txtSetPoolTemp = new System.Windows.Forms.TextBox();
-            this.btnPoolCover = new System.Windows.Forms.Button();
-            this.btnSolarCover = new System.Windows.Forms.Button();
             this.btnEmptyLog = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.txtAutoManual = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.tbPoolTemp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSetPoolTemp)).BeginInit();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtPoolLog
@@ -178,24 +176,6 @@
             this.txtSetPoolTemp.TabIndex = 14;
             this.txtSetPoolTemp.TextChanged += new System.EventHandler(this.txtSetPoolTemp_TextChanged);
             // 
-            // btnPoolCover
-            // 
-            this.btnPoolCover.Location = new System.Drawing.Point(17, 27);
-            this.btnPoolCover.Name = "btnPoolCover";
-            this.btnPoolCover.Size = new System.Drawing.Size(174, 61);
-            this.btnPoolCover.TabIndex = 15;
-            this.btnPoolCover.Text = "Pool cover";
-            this.btnPoolCover.UseVisualStyleBackColor = true;
-            // 
-            // btnSolarCover
-            // 
-            this.btnSolarCover.Location = new System.Drawing.Point(228, 27);
-            this.btnSolarCover.Name = "btnSolarCover";
-            this.btnSolarCover.Size = new System.Drawing.Size(174, 61);
-            this.btnSolarCover.TabIndex = 16;
-            this.btnSolarCover.Text = "Solar cover";
-            this.btnSolarCover.UseVisualStyleBackColor = true;
-            // 
             // btnEmptyLog
             // 
             this.btnEmptyLog.AutoSize = true;
@@ -230,34 +210,40 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Temperature controls";
             // 
-            // groupBox2
-            // 
-            this.groupBox2.AutoSize = true;
-            this.groupBox2.Controls.Add(this.btnSolarCover);
-            this.groupBox2.Controls.Add(this.btnPoolCover);
-            this.groupBox2.Location = new System.Drawing.Point(686, 318);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(421, 275);
-            this.groupBox2.TabIndex = 19;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Cover controls";
-            // 
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
             this.checkBox2.Location = new System.Drawing.Point(150, 436);
             this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(131, 36);
+            this.checkBox2.Size = new System.Drawing.Size(87, 24);
             this.checkBox2.TabIndex = 21;
             this.checkBox2.Text = "Manuel";
             this.checkBox2.UseVisualStyleBackColor = true;
             this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
+            // txtAutoManual
+            // 
+            this.txtAutoManual.Location = new System.Drawing.Point(871, 339);
+            this.txtAutoManual.Name = "txtAutoManual";
+            this.txtAutoManual.ReadOnly = true;
+            this.txtAutoManual.Size = new System.Drawing.Size(92, 26);
+            this.txtAutoManual.TabIndex = 19;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(722, 342);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(132, 20);
+            this.label6.TabIndex = 20;
+            this.label6.Text = "Basseng er satt i:";
+            // 
             // ucHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.txtAutoManual);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnEmptyLog);
             this.Controls.Add(this.txtPoolLog);
@@ -267,7 +253,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbSetPoolTemp)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -288,11 +273,10 @@
         private System.Windows.Forms.TrackBar tbSetPoolTemp;
         private System.Windows.Forms.TextBox txtPoolTemp;
         private System.Windows.Forms.TextBox txtSetPoolTemp;
-        private System.Windows.Forms.Button btnPoolCover;
-        private System.Windows.Forms.Button btnSolarCover;
         private System.Windows.Forms.Button btnEmptyLog;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.TextBox txtAutoManual;
+        private System.Windows.Forms.Label label6;
     }
 }

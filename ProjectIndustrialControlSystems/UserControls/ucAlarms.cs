@@ -26,7 +26,6 @@ namespace ProjectIndustrialControlSystems.UserControls
         {
             InitializeComponent();
             InitializeListView();
-            //SetupAlarmUpdateTimer();
         }
 
         private async void InitializeListView()
@@ -49,14 +48,6 @@ namespace ProjectIndustrialControlSystems.UserControls
             lvAlarm.DrawColumnHeader += LvAlarm_DrawColumnHeader;
             await UpdateAlarmsAsync();
         }
-
-        //private void SetupAlarmUpdateTimer()
-        //{
-        //    _alarmUpdateTimer = new System.Timers.Timer(1000); // Set up the timer for 1 second
-        //    _alarmUpdateTimer.Elapsed += async (sender, e) => await UpdateAlarmsAsync();
-        //    _alarmUpdateTimer.AutoReset = true;
-        //    _alarmUpdateTimer.Enabled = true;
-        //}
 
         public async Task UpdateAlarmsAsync()
         {
@@ -81,27 +72,6 @@ namespace ProjectIndustrialControlSystems.UserControls
                 Color alarmColor = Color.FromArgb(Convert.ToInt32(alarm.AlarmColor));
                 item.BackColor = alarmColor;
                 lvAlarm.Items.Add(item);
-            }
-
-            //if (lvAlarm.InvokeRequired)
-            //{
-            //    lvAlarm.Invoke(new MethodInvoker(delegate
-            //    {
-            //        UpdateListViewItems(list, numExistAlarms, numDBAlarms);
-            //    }));
-            //}
-            //else
-            //{
-            //    UpdateListViewItems(list, numExistAlarms, numDBAlarms);
-            //}
-            
-        }
-
-        private void UpdateListViewItems(List<ListViewItem> list, int numExistAlarms, int numDBAlarms)
-        {
-            for (int i = numExistAlarms; i < numDBAlarms; i++)
-            {
-                lvAlarm.Items.Add(list[i]);
             }
         }
 
